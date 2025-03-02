@@ -64,7 +64,48 @@ const EditForm ={
 
 // Componente item-data
 const ItemData = {
-    
+    props: {
+        item: {
+          type: Object,
+          required: true
+        },
+        index: {
+          type: Number,
+          default: 0
+        }
+      },
+      data() {
+        return {
+          isEditing: false 
+        };
+      },
+      methods: {
+        toggleEditFormVisibility() {
+          this.isEditing = !this.isEditing; 
+        }
+      },
+      template: `
+        <div class="col-md-4">
+          <div class="card mb-3">
+            <div class="card-body">
+              <div v-if="!isEditing">
+                <h3>{{ item.data.find(d => d.name === 'name').value }}</h3>
+                <p>{{ item.data.find(d => d.name === 'description').value }}</p>
+                <p><strong>Director:</strong> {{ item.data.find(d => d.name === 'director').value }}</p>
+                <p><strong>Release Date:</strong> {{ item.data.find(d => d.name === 'datePublished').value }}</p>
+                <a :href="item.href" target="_blank" class="btn btn-primary">Ver</a>
+                <button @click="toggleEditFormVisibility" class="btn btn-secondary ms-2">Editar</button>
+              </div>
+              <edit-form 
+                v-if="isEditing"
+                :itemdata="item.data" 
+                :index="index"
+                @formClosed="toggleEditFormVisibility">
+              </edit-form>
+            </div>
+          </div>
+        </div>
+      `
 };
 
 // Crear la aplicación Vue
