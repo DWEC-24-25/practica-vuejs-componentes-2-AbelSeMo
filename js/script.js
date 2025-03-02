@@ -38,38 +38,39 @@ const server_data = {
 };
 
 // Componente edit-form
-const EditForm = defineComponent({
-    template: `
-        <div>
-            <h2>Edit Form</h2>
-            <!-- Aquí iría el formulario de edición -->
-        </div>
-    `
-});
-
-// Componente item-data
-const ItemData = defineComponent({
-    props: {
-        item: {
-            type: Object,
-            required: true
+const EditForm ={
+    props: ["itemdata", "index"],
+    methods: {
+        closeForm() {
+            this.$emit("formClosed"); 
         }
     },
-    template: `
-        <div>
-            <h3>{{ item.data.find(d => d.name === 'name').value }}</h3>
-            <p>{{ item.data.find(d => d.name === 'description').value }}</p>
-            <p><strong>Director:</strong> {{ item.data.find(d => d.name === 'director').value }}</p>
-            <p><strong>Release Date:</strong> {{ item.data.find(d => d.name === 'datePublished').value }}</p>
-            <a :href="item.href" target="_blank">More Info</a>
+    template: `<div class="card p-3">
+    <h2>Editar Película</h2>
+    <form>
+        <div v-for="(item, index) in itemdata" :key="index" class="mb-3">
+            <label class="form-label">
+                {{ item.prompt }}
+            </label>
+            <input 
+                v-model="item.value" 
+                class="form-control">
         </div>
-    `
-});
+        
+        <button type="button" class="btn btn-secondary mt-3" @click="closeForm">Cerrar</button>
+    </form>
+    </div>`
+};
+
+// Componente item-data
+const ItemData = {
+    
+};
 
 // Crear la aplicación Vue
-const app = createApp({
+const app = Vue.createApp({
     setup() {
-        const col = reactive(server_data.collection);
+        const col = Vue.reactive(server_data.collection);
 
         return {
             col

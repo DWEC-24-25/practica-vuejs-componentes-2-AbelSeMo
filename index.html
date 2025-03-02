@@ -29,25 +29,18 @@
             
 
             <!-- TODO: Iterar sobre los items y mostrar cada uno usando el componente item-data -->
-        <div id="app" class="container mt-4">
-          <section class="bg-light p-3 mb-4">
-              <h1 id="title">{{col.collection.title}}</h1>
+        <div id="app">
+          <section class="jumbotron">
+              <h1 id="title">{{col.title}}</h1>
           </section>
-          <section class="row">
-              <section v-for="item in col.collection.items" :key="item.href" class="col-12 col-md-4 mb-4">
-                  <article class="card h-100">
-                      <article class="card-body">
-                          <dl>
-                              <template v-for="data in item.data" :key="data.name">
-                                  <dt>{{ data.prompt }}</dt>
-                                  <dd>{{ data.value }}</dd>
-                              </template>
-                          </dl>
-                          <a :href="item.href" class="btn btn-primary">Ver</a>
-                          <button @click="toggleEditFormVisibility" class="btn-primary"></button>
-                      </article>
-                  </article>
-              </section>
+          <section class="row container mt-4 ms-4">
+            <item-data 
+            class="col-md-4 col-sm-6 col-12"
+            v-for="(item, index) in col.items" 
+            :key="index" 
+            :item="item" 
+            :index="index"
+            />
           </section>
         </div>
 
